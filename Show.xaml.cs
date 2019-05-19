@@ -44,7 +44,7 @@ namespace TP22
             }
         }
         //выводим список аэропортов по выделенному элементу списка рейсов
-        private void ItemsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Show_Airport(object sender, RoutedEventArgs e)
         {
             
             Airport_show.Items.Clear();
@@ -54,24 +54,33 @@ namespace TP22
             {
                 //получаем выбранный на форме рейс
                 current = flight_show.SelectedItems[0] as Flight;
-                //для привязки списка к форме и выводу его на форму 
-                //необходимо создать список элементов класса StringValue
-                //так как необходим класс со строковым полем
-                List<StringValue> Aiportik = new List<StringValue>();
-                foreach (var el in current.Airport)
+                if (current == null)
                 {
-                    StringValue st = new StringValue(el);
+                    MessageBox.Show("Необходимо выбрать хотя бы один элемент!");
+                    return;
+                }
+                else
+                {
+                    //для привязки списка к форме и выводу его на форму 
+                    //необходимо создать список элементов класса StringValue
+                    //так как необходим класс со строковым полем
+                    List<StringValue> Aiportik = new List<StringValue>();
+                    foreach (var el in current.Airport)
+                    {
+                        StringValue st = new StringValue(el);
 
-                    Aiportik.Add(st);
+                        Aiportik.Add(st);
+                    }
+                    foreach (var el in Aiportik)
+                    {
+                        Airport_show.Items.Add(el);
+                    }
                 }
-                foreach (var el in Aiportik)
-                {
-                    Airport_show.Items.Add(el);
-                }
+               
             }
             catch(Exception ex)
             {
-                Console.Write(ex.Message);
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -83,12 +92,25 @@ namespace TP22
         {
             //получаем выделенный пользователем элемент двухсвязанного списка
             var current_flight = flight_show.SelectedItems[0] as Flight;
-            //удаляем элемент двухсвязного списка
-            flight_list.Remove(current_flight);
-            //current = current_flight;
-            
-            //передаем измененный двухсвязанный список в статистическое хранилище
-            Share.Flight_list = flight_list;
+            if (current_flight == null)
+            {
+                MessageBox.Show("Необходимо выбрать хотя бы один элемент!");
+                return;
+            }
+            else
+            {
+                //удаляем элемент двухсвязного списка
+                flight_list.Remove(current_flight);
+                if (flight_list.Count == 0)
+                {
+                    Airport_show.Items.Clear();
+                }
+                //current = current_flight;
+
+                //передаем измененный двухсвязанный список в статистическое хранилище
+                Share.Flight_list = flight_list;
+            }
+           
            
 
         }
@@ -97,10 +119,20 @@ namespace TP22
         {
             //получаем выделенный пользователем элемент двухсвязанного списка
             var current = flight_show.SelectedItems[0] as Flight;
-           //создаем окно для измения данных элемента двухсвязного списка
-            Flight_Edit Flight_Edit = new Flight_Edit(current);
-            //открываем окно для измения
-            Flight_Edit.Show();
+            if (current == null)
+            {
+                MessageBox.Show("Необходимо выбрать хотя бы один элемент!");
+                return;
+            }
+            else
+            {
+                //создаем окно для измения данных элемента двухсвязного списка
+                Flight_Edit Flight_Edit = new Flight_Edit(current);
+                //открываем окно для измения
+                Flight_Edit.Show();
+            }
+            this.Close();
+
 
 
         }

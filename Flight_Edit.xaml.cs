@@ -67,7 +67,13 @@ namespace TP22
                 //получаем класс StringValue -поле Value данного класса
                 //есть выбранный элемент списка Аэропорт
                 airport_current_stringvalue = Airport_show_Edit.SelectedItem as StringValue;
+                if (airport_current_stringvalue == null)
+                {
+                    MessageBox.Show("Необходимо выбрать хотя бы один элемент!");
+                    return;
+                }
                 airport_current = airport_current_stringvalue.Value;
+                
 
             }
             catch (Exception ex)
@@ -88,6 +94,11 @@ namespace TP22
             {
                 //получаем элемент с формы
                 airport_current_stringvalue = Airport_show_Edit.SelectedItem as StringValue;
+                if (airport_current_stringvalue == null)
+                {
+                    MessageBox.Show("Необходимо выбрать хотя бы один элемент!");
+                    return;
+                }
                 airport_current = airport_current_stringvalue.Value;
                 //получаем индекс выбранного элемента
                 airport_index = Airport_show_Edit.SelectedIndex;
@@ -106,32 +117,6 @@ namespace TP22
 
         }
 
-        //при выборе элемента двухсвязанного списка на форме выводится в отдельном поле
-        //список Аэропортов для этого рейса
-        private void ItemsView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Airport_show_Edit.Items.Clear();
-            try
-            {
-
-                List<StringValue> Aiportik = new List<StringValue>();
-                foreach (var el in flight_current.Airport)
-                {
-                    StringValue st = new StringValue(el);
-
-                    Aiportik.Add(st);
-                }
-                foreach (var el in Aiportik)
-                {
-                    Airport_show_Edit.Items.Add(el);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.Message);
-            }
-
-        }
         //обработка кнопки сохрания измений 
         private void Flight_Edit_Save(object sender, RoutedEventArgs e)
         {
@@ -149,6 +134,9 @@ namespace TP22
                 MessageBox.Show("Измения сохранены!");
 
             }
+            Show show = new Show(Share.Flight_list);
+            show.Show();
+            this.Close();
         }
        
     }

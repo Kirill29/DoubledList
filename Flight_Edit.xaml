@@ -37,6 +37,7 @@
             <!--Третья строка-->
 
         </Grid>
+        
         <Button Click="Flight_Edit_Save" Content="Изменить запись" Margin="19,104,9,271"/>
         <TextBlock Margin="10,296.72,9.6,107.28"><Run Text="Аэропорты"/></TextBlock>
         <DataGrid  x:Name="Airport_show_Edit" Margin="783,5,-347,252">

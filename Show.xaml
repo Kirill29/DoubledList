@@ -12,7 +12,7 @@
 
 
 
-        <ListView x:Name="flight_show" Margin="10,10,180,277"  SelectionChanged="ItemsView_OnSelectionChanged">
+        <ListView x:Name="flight_show" Margin="10,10,180,277"  >
             <ListView.View >
                 <GridView x:Name="grid">
                     <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding Number}"/>
@@ -39,6 +39,18 @@
                        Margin="0"
                        VerticalAlignment="Center"
                                     Click="Flight_delete"
+                        />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                       Content="Показать Аэропорты"
+                       Margin="0"
+                       VerticalAlignment="Center"
+                                    Click="Show_Airport"
                         />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
